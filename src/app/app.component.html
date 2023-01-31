@@ -1,0 +1,77 @@
+<app-header></app-header>
+<fieldset style="background-color: cadetblue; float:inherit">
+  <div >
+    <label>Panel List :</label>
+    <label>
+        <input type="radio" value="byDate" name="panelList" (click)="radioChangeHandler($event)">
+        By Date
+    </label>
+    <label>
+        <input type="radio" value="byMgr" name="panelList"  (click)="radioChangeHandler($event)">
+        By Manager
+    </label>
+</div>
+</fieldset>
+
+
+<br><br>
+
+<!-- <div *ngIf="radioValue=='byDate' then ifBlock else elseBlock"></div> -->
+
+<ng-template [ngIf]="radioValue=='byDate'">
+  <br><br>
+
+  <table border="1">
+    <tr><td><label>Date From</label></td><td><input type="date" name="datefrom" placeholder="Enter Date From" #box1></td></tr>
+    <tr><td><label>Date To</label></td><td><input type="date" name="dateto" placeholder="Enter Date To" #box2></td></tr>
+    <tr><td><button (click)="getData(box1.value, box2.value)">Get Data</button></td></tr>
+  </table>
+  
+  <br><br>
+  
+  <table border="1">  
+    <tr>    
+      <th>PanelId</th>    
+      <th>PanelName</th>    
+      <th>Skills</th>    
+      <th>ManagerName</th>  
+    </tr>  
+    <tr *ngFor="let data of availData">    
+      <td>{{data.panel_Id}}</td>    
+      <td>{{data.panel_Name}}</td>    
+      <td>{{data.skills}}</td>    
+      <td>{{data.manager_Name}}</td>  
+    </tr>
+  </table>
+</ng-template>
+
+<ng-template [ngIf]="radioValue=='byMgr'">
+
+  <label>Managers List</label>
+  <select>
+    <option><a href="#">abc</a></option>
+  </select>
+  <table border="1" id="excel-table">  
+    <tr>    
+      <th>PanelId</th>    
+      <th>ManagerId</th>    
+      <th>PanelName</th>    
+      <th>AvailableFrom</th>    
+      <th>AvailableTo</th>    
+      <th>EmailId</th>    
+      <th>Skills</th>  
+    </tr>  
+    <tr *ngFor="let data of item">    
+      <td>{{data.panelId}}</td>    
+      <td>{{data.managerId}}</td>    
+      <td>{{data.panelName}}</td>    
+      <td>{{data.availableFrom}}</td>    
+      <td>{{data.availableTo}}</td>    
+      <td>{{data.emailId}}</td>    
+      <td>{{data.skills}}</td>  
+    </tr>
+  </table>
+  <button (click)="exportexcel()">Export To Excel</button>
+</ng-template>
+
+
