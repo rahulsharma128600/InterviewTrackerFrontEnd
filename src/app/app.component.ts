@@ -11,10 +11,12 @@ export class AppComponent {
   title = 'AssignmentFirst';
   fileName = 'ExcelSheet.xlsx';
   item: any;
-  dateFrom: string = '';
-  dateTo: string = '';
+  dateFrom: Date = new Date(0);
+  dateTo: Date = new Date(0);
   availData: any;
-  radioValue:any;
+  radioValue: any;
+  panelList: any;
+  errorMsg: any;
 
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
@@ -22,23 +24,49 @@ export class AppComponent {
       this.item = data;
     })
   }
-  
-  getAll() {
-    this.trackerItem.trackerDates(this.dateFrom, this.dateTo).subscribe((data) => { 
-      console.warn(data)     
-       this.availData = data; })
-  } 
-  
-  getData(date1: string, date2: string) { 
-    console.warn(date1, date2); 
-    this.dateFrom = date1; 
-    this.dateTo = date2; 
-    console.warn(this.dateFrom + " " + this.dateTo); 
-    this.getAll();
-   }
 
-  radioChangeHandler(event:any)
-  {
+  validateDate(dateFrom: Date, dateTo: Date) {
+    if ((dateFrom.toString() != "" && dateTo.toString() != "" && dateTo > dateFrom)) {
+      return true
+    }
+    else if (dateFrom.toString() == "" || dateTo.toString() == "") {
+      this.errorMsg = "Fields cannot be empty.Enter both the dates!!!";
+      return false
+    }
+    else {
+      this.errorMsg = "start date should be less than end date!!!"
+      return false
+    }
+  }
+
+
+  getAll() {
+    this.trackerItem.trackerDates(this.dateFrom, this.dateTo).subscribe((data) => {
+      console.warn(data)
+      this.availData = data;
+    })
+  }
+
+  getData(date1: any, date2: any) {
+    if (this.validateDate(date1, date2)) {
+      console.warn(date1, date2);
+      this.dateFrom = date1;
+      this.dateTo = date2;
+      console.warn(this.dateFrom + " " + this.dateTo);
+      this.getAll();
+    }
+
+  }
+
+  getPanelByMgr(MgrId: any) {
+    console.warn('mgrID : ', MgrId)
+    this.trackerItem.trackerPanelByMgr(MgrId).subscribe((panel) => {
+      console.warn('panel : ', panel)
+      this.panelList = panel;
+    })
+  }
+
+  radioChangeHandler(event: any) {
     this.radioValue = event.target.value;
   }
 
