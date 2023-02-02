@@ -17,6 +17,8 @@ export class AppComponent {
   radioValue: any;
   panelList: any;
   errorMsg: any;
+  selectedMgr:[]=[];
+  strValues:string = '';
 
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
@@ -44,6 +46,7 @@ export class AppComponent {
     this.trackerItem.trackerDates(this.dateFrom, this.dateTo).subscribe((data) => {
       console.warn(data)
       this.availData = data;
+      
     })
   }
 
@@ -66,10 +69,30 @@ export class AppComponent {
     })
   }
 
-  radioChangeHandler(event: any) {
-    this.radioValue = event.target.value;
+
+  getPanelByMultipleMgrs(){
+    this.strValues = this.selectedMgr.toString();
+    console.warn('strValues : ',this.strValues);
+    this.trackerItem.trackerPanelByMultipleMgrs(this.strValues).subscribe((panel)=>{
+      console.warn('Multiple Panel', panel)
+      this.panelList = panel;
+    })
   }
 
+  // radioChangeHandler(event: any) {
+  //   this.radioValue = event.target.value;
+  // }
+  radioChangeHandler(event: any) {    
+    this.radioValue = event.target.value; 
+    if(this.radioValue == 'byMgr'|| this.radioValue =='byDate' )
+    { 
+      this.errorMsg=""; 
+     this.availData='';
+     this.panelList='';
+
+    }
+  }
+  //getAll.reload();
 
   // // Data to be Export in Excel 
 

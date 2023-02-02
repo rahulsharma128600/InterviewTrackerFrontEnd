@@ -23,4 +23,10 @@ export class ApiCallService {
   {
     return this.http.get('http://localhost:5170/api/Panel/GetPanelByMgr/'+mgrId)
   }
+
+  trackerPanelByMultipleMgrs(str:string)
+  {
+    console.warn(str);
+    return this.http.get('http://localhost:5170/api/Panel/GetPanelByManagers/'+str)
+  }
 }
