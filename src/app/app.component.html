@@ -21,7 +21,7 @@
 <ng-template [ngIf]="radioValue=='byDate'">
   <br><br>
   <!-- <table cellspacing="0" border="1"></table> -->
-  <table class="table-responsive" cellspacing="5" border="2">
+  <table class="table-responsive" cellspacing="5" border="1">
     <tr>
       <td><label>Date From</label></td>
       <td><input  type="date" name="datefrom" placeholder="Enter Date From" #box1></td>
@@ -30,25 +30,23 @@
       <td><label>Date To</label></td>
       <td><input  type="date" name="dateto" placeholder="Enter Date To" #box2></td>
     </tr>
-    <tr>
-      <button (click)="getData(box1.value, box2.value)">Get Report</button>
-    </tr>
+    <!-- <tr>
+      <button type="button" class="btn btn-outline-primary"(click)="getData(box1.value, box2.value)">Get Report</button>
+     
+    </tr> -->
   </table>
+  <button type="button" class="btn btn-outline-primary"(click)="getData(box1.value, box2.value)" align="center">Get Report</button>
   <p style="color: red;">{{errorMsg}}</p>
 
   <br><br>
 
-  <table class="table-responsive"cellspacing="5" border="3">
+  <table class="table-bordered table table-bordered  table-responsive table table-hover" cellspacing="5" border="3">
     <tr>
-      <th>Panel_Name</th>
+      <th>Panel Name</th>
       <th>Skills</th>
-<<<<<<< HEAD
       <th>Available From</th>
       <th>Available To</th>
       <th>Manager Name</th>
-=======
-      <th>Manager_Name</th>
->>>>>>> c48e544a9be9c854d5e202863d2dc8c5550a80ac
     </tr>
     <tr *ngFor="let data of availData">
       <td>{{data.panel_Name}}</td>
@@ -82,8 +80,7 @@
     </p>
   </ng-template>
   <ng-template #elseBlock>
-<<<<<<< HEAD
-    <table class=" table-bordered table-hover table-responsive "cellspacing="5" border="4" id="excel-table">
+    <table class="table-bordered table table-bordered  table-responsive table table-hover" cellspacing="5" border="4" id="excel-table">
       <tr>    
           <th>Panel Name</th>
           <th>Available From</th>
@@ -101,26 +98,9 @@
           <td>{{data.manager_Name}}</td>
         </tr>
       
-=======
-    <table class=" table-bordered table-responsive"cellspacing="5" border="4" id="excel-table">
-      <tr>
-        <th>Panel Name</th>
-        <th>Available From</th>
-        <th>Available To</th>
-        <th>Email Id</th>
-        <th>Skills</th>
-      </tr>
-      <tr *ngFor="let data of panelList">
-        <td>{{data.panelName}}</td>
-        <td>{{data.availableFrom}}</td>
-        <td>{{data.availableTo}}</td>
-        <td>{{data.emailId}}</td>
-        <td>{{data.skills}}</td>
-      </tr>
->>>>>>> c48e544a9be9c854d5e202863d2dc8c5550a80ac
 
     </table>
-    <button (click)="exportexcel()">Export To Excel</button>
+    <button type="button" class="btn btn-outline-primary"(click)="exportexcel()">Export To Excel</button>
   </ng-template>
 
 </ng-template>
