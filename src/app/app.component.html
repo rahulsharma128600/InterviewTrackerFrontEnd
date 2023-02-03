@@ -1,5 +1,5 @@
 <app-header></app-header>
-<fieldset style="background-color: rgba(147, 160, 95, 0); float:inherit">
+<fieldset style="background-color:violet; float:inherit">
   <div>
     <label>Panel List :</label>
     <label>
@@ -21,7 +21,7 @@
 <ng-template [ngIf]="radioValue=='byDate'">
   <br><br>
   <!-- <table cellspacing="0" border="1"></table> -->
-  <table cellspacing="0" border="1">
+  <table class="table-responsive" cellspacing="5" border="2">
     <tr>
       <td><label>Date From</label></td>
       <td><input  type="date" name="datefrom" placeholder="Enter Date From" #box1></td>
@@ -38,25 +38,30 @@
 
   <br><br>
 
-  <table cellspacing="0" border="1">
+  <table class="table-responsive"cellspacing="5" border="3">
     <tr>
       <th>Panel Name</th>
       <th>Skills</th>
+      <th>Available From</th>
+      <th>Available To</th>
       <th>Manager Name</th>
     </tr>
     <tr *ngFor="let data of availData">
       <td>{{data.panel_Name}}</td>
       <td>{{data.skills}}</td>
+      <td>{{data.available_From}}</td>
+      <td>{{data.available_To}}</td>
       <td>{{data.manager_Name}}</td>
+      
     </tr>
   </table>
 </ng-template>
 
 <ng-template [ngIf]="radioValue=='byMgr'">
 
-  <label>Managers List : </label>
+  <label>Select Manager : </label>
   <select #selTag (change)="getPanelByMultipleMgrs()" [(ngModel)]="selectedMgr" multiple>
-    <option default>Select Manager</option>
+    <!-- <option default>Select Manager</option> -->
     <option *ngFor="let data of item" value="{{data.managerId}}">{{data.managerName}}</option>
   </select>
   <br>
@@ -73,21 +78,24 @@
     </p>
   </ng-template>
   <ng-template #elseBlock>
-    <table cellspacing="0" border="1" id="excel-table">
-      <tr>
-        <th>Panel Name</th>
-        <th>Available From</th>
-        <th>Available To</th>
-        <th>Email Id</th>
-        <th>Skills</th>
-      </tr>
-      <tr *ngFor="let data of panelList">
-        <td>{{data.panelName}}</td>
-        <td>{{data.availableFrom}}</td>
-        <td>{{data.availableTo}}</td>
-        <td>{{data.emailId}}</td>
-        <td>{{data.skills}}</td>
-      </tr>
+    <table class=" table-bordered table-hover table-responsive "cellspacing="5" border="4" id="excel-table">
+      <tr>    
+          <th>Panel Name</th>
+          <th>Available From</th>
+          <th>Available To</th>
+          <th>Email Id</th>
+          <th>Skills</th>
+          <th>Manager Name</th>
+        </tr>
+        <tr *ngFor="let data of panelList">
+          <td>{{data.panel_Name}}</td>
+          <td>{{data.available_From}}</td>
+          <td>{{data.available_To}}</td>
+          <td>{{data.email_Id}}</td>
+          <td>{{data.skills}}</td>
+          <td>{{data.manager_Name}}</td>
+        </tr>
+      
 
     </table>
     <button (click)="exportexcel()">Export To Excel</button>
