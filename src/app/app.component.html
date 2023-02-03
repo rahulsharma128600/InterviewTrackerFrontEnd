@@ -40,11 +40,15 @@
 
   <table class="table-responsive"cellspacing="5" border="3">
     <tr>
-      <th>Panel Name</th>
+      <th>Panel_Name</th>
       <th>Skills</th>
+<<<<<<< HEAD
       <th>Available From</th>
       <th>Available To</th>
       <th>Manager Name</th>
+=======
+      <th>Manager_Name</th>
+>>>>>>> c48e544a9be9c854d5e202863d2dc8c5550a80ac
     </tr>
     <tr *ngFor="let data of availData">
       <td>{{data.panel_Name}}</td>
@@ -78,6 +82,7 @@
     </p>
   </ng-template>
   <ng-template #elseBlock>
+<<<<<<< HEAD
     <table class=" table-bordered table-hover table-responsive "cellspacing="5" border="4" id="excel-table">
       <tr>    
           <th>Panel Name</th>
@@ -96,6 +101,23 @@
           <td>{{data.manager_Name}}</td>
         </tr>
       
+=======
+    <table class=" table-bordered table-responsive"cellspacing="5" border="4" id="excel-table">
+      <tr>
+        <th>Panel Name</th>
+        <th>Available From</th>
+        <th>Available To</th>
+        <th>Email Id</th>
+        <th>Skills</th>
+      </tr>
+      <tr *ngFor="let data of panelList">
+        <td>{{data.panelName}}</td>
+        <td>{{data.availableFrom}}</td>
+        <td>{{data.availableTo}}</td>
+        <td>{{data.emailId}}</td>
+        <td>{{data.skills}}</td>
+      </tr>
+>>>>>>> c48e544a9be9c854d5e202863d2dc8c5550a80ac
 
     </table>
     <button (click)="exportexcel()">Export To Excel</button>
