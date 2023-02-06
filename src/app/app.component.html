@@ -16,51 +16,59 @@
 
 <br>
 
-<!-- <div *ngIf="radioValue=='byDate' then ifBlock else elseBlock"></div> -->
-
 <ng-template [ngIf]="radioValue=='byDate'">
-  
-  <!-- <table cellspacing="0" border="1"></table> -->
   <table class="table-responsive" cellspacing="5" border="2">
     <tr>
       <td><label>Date From</label></td>
-      <td><input  type="date" name="datefrom" placeholder="Enter Date From" #box1></td>
+      <td><input type="date" name="datefrom" placeholder="Enter Date From" #box1></td>
     </tr>
     <tr>
       <td><label>Date To</label></td>
-      <td><input  type="date" name="dateto" placeholder="Enter Date To" #box2></td>
+      <td><input type="date" name="dateto" placeholder="Enter Date To" #box2></td>
     </tr>
-    <!-- <tr>
-      <button type="button" class="btn btn-outline-primary"(click)="getData(box1.value, box2.value)">Get Report</button>
-     
-    </tr> -->
   </table>
-  <button type="button" class="btn btn-outline-primary"(click)="getData(box1.value, box2.value)" align="center">Get Report</button>
+  <button type="button" class="btn btn-outline-primary" (click)="getData(box1.value, box2.value)" align="center">Get
+    Report</button>
   <p style="color: red;">{{errorMsg}}</p>
+  <ng-template [ngIf]="availData !=''">
+    <table class=" table-bordered table-responsive " border="2" cellpadding="8">
+      <tr>
+        <th>Panel Name</th>
+        <th>Skills</th>
+        <th>Available From</th>
+        <th>Available To</th>
+        <th>Manager Name</th>
+      </tr>
+      <tr *ngFor="let data of availData">
+        <td>{{data.panel_Name}}</td>
+        <td>{{data.skills}}</td>
+        <td>{{data.available_From}}</td>
+        <td>{{data.available_To}}</td>
+        <td>{{data.manager_Name}}</td>
 
-  
+      </tr>
+    </table>
+  </ng-template>
 
-  
-    <tr *ngFor="let data of availData">
-      <td>{{data.panel_Name}}</td>
-      <td>{{data.skills}}</td>
-      <td>{{data.available_From}}</td>
-      <td>{{data.available_To}}</td>
-      <td>{{data.manager_Name}}</td>
-      
-    </tr>
-  
+
+
+
+
+
+
 </ng-template>
 
 <ng-template [ngIf]="radioValue=='byMgr'">
 
   <label>Select Manager : </label>
   <select #selTag (change)="getPanelByMultipleMgrs()" [(ngModel)]="selectedMgr" multiple>
-    <!-- <option default>Select Manager</option> -->
+    <!-- <option selected>Select Manager</option> -->
     <option *ngFor="let data of item" value="{{data.managerId}}">{{data.managerName}}</option>
   </select>
+
+  Note : You can select multiple managers by pressing ctrl
   <br>
-  
+
   <!-- <ul>
     <li *ngFor="let mgrs of selectedMgr">{{mgrs}}</li>
   </ul> -->
@@ -68,29 +76,36 @@
   <br>
   <p *ngIf="panelList == '' then ifBlock else elseBlock"></p>
   <ng-template #ifBlock>
-    <p style="color: red;">
-      No Panel Available
-    </p>
+    <table>
+      <tr *ngFor="let data of mgrNames">
+        <td style="color: red;">
+          {{mgrNotAvailMsg}} {{data.managerName}}
+        </td>
+      </tr>
+    </table>
+
   </ng-template>
   <ng-template #elseBlock>
-    <table class=" table-bordered table-responsive"cellspacing="5" border="4" id="excel-table">
+    <table class=" table-bordered table-responsive " border="2" cellpadding="8" id="excel-table">
       <tr>
         <th>Panel Name</th>
         <th>Available From</th>
         <th>Available To</th>
         <th>Email Id</th>
         <th>Skills</th>
+        <th>ManagerName</th>
       </tr>
       <tr *ngFor="let data of panelList">
-        <td>{{data.panelName}}</td>
-        <td>{{data.availableFrom}}</td>
-        <td>{{data.availableTo}}</td>
-        <td>{{data.emailId}}</td>
+        <td>{{data.panel_Name}}</td>
+        <td>{{data.available_From}}</td>
+        <td>{{data.available_To}}</td>
+        <td>{{data.email_Id}}</td>
         <td>{{data.skills}}</td>
+        <td>{{data.manager_Name}}</td>
       </tr>
 
     </table>
-    <button type="button" class="btn btn-outline-primary"(click)="exportexcel()">Export To Excel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="exportexcel()">Export To Excel</button>
   </ng-template>
 
 </ng-template>

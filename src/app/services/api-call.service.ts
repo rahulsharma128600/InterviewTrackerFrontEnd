@@ -29,4 +29,9 @@ export class ApiCallService {
     console.warn(str);
     return this.http.get('http://localhost:5170/api/Panel/GetPanelByManagers/'+str)
   }
+
+  trackerEmptyListMgrName(str:string){
+    console.warn('str in api',str);
+    return this.http.get('http://localhost:5170/api/Manager/GetMgrById/'+str)
+  }
 }

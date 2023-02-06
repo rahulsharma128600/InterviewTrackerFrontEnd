@@ -19,6 +19,9 @@ export class AppComponent {
   errorMsg: any;
   selectedMgr:[]=[];
   strValues:string = '';
+  mgrNames:any;
+  emptyListMgrId:any;
+  mgrNotAvailMsg:any;
 
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
@@ -32,7 +35,7 @@ export class AppComponent {
       return true
     }
     else if (dateFrom.toString() == "" || dateTo.toString() == "") {
-      this.errorMsg = "Fields cannot be empty.Please enter both the dates!!!";
+      this.errorMsg = "Please enter both the dates!!!";
       return false
     }
     else {
@@ -72,11 +75,22 @@ export class AppComponent {
 
   getPanelByMultipleMgrs(){
     this.strValues = this.selectedMgr.toString();
+    
     console.warn('strValues : ',this.strValues);
+    
     this.trackerItem.trackerPanelByMultipleMgrs(this.strValues).subscribe((panel)=>{
       console.warn('Multiple Panel', panel)
       this.panelList = panel;
+      if(this.panelList==''){
+          this.emptyListMgrId=this.selectedMgr.toString();
+          this.trackerItem.trackerEmptyListMgrName(this.emptyListMgrId).subscribe((mgrName)=>{
+            console.warn('mgrList',mgrName);
+            this.mgrNames=mgrName;            
+          })
+          this.mgrNotAvailMsg='No Panel Available under'       
+      } 
     })
+
   }
 
   // radioChangeHandler(event: any) {
@@ -89,6 +103,8 @@ export class AppComponent {
       this.errorMsg=""; 
      this.availData='';
      this.panelList='';
+     this.mgrNotAvailMsg='';
+     this.mgrNames='';
     }
   }
 
