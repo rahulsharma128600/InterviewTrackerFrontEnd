@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InterviewTrackerBackend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace InterviewTrackerBackend.Controllers
 {
@@ -23,5 +24,12 @@ namespace InterviewTrackerBackend.Controllers
             var mgr = mgrContext.ManagerTbls.ToList();
             return Ok(mgr);
         }
+
+        [HttpGet]
+        [Route("api/[controller]/GetMgrById/{str}")]
+        public IActionResult GetMgrById(string str){
+        var manager = mgrContext.GetManagerByIds.FromSqlInterpolated($"exec spGetManagersByManagerId @Manager_Id={str}").ToList();
+             return Ok(manager);
     }
+}
 }

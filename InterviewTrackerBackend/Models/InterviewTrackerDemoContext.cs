@@ -23,6 +23,7 @@ public partial class InterviewTrackerDemoContext : DbContext
     public virtual DbSet<GetPanelsByMgr> GetPanelByMgr { get; set; }
 
     public virtual DbSet<GetPanelsByManagers> GetPanelsByManagers{get;set;}
+    public virtual DbSet<GetManagerById> GetManagerByIds{get;set;}
     
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

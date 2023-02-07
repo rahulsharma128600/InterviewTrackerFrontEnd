@@ -109,28 +109,30 @@ namespace InterviewTrackerBackend.Controllers
             // }
             // //GetPanelByMgrs();
             // //return Ok("TempManagerTbl updated");
-             var panel = panContext.GetPanelsByManagers.FromSqlInterpolated($"exec spGetPanelsByManagersFinal @Manager_Id={str}").ToList();
+             var panel = panContext.GetPanelsByManagers.FromSqlInterpolated($"exec spGetPanelsByManagersFinal @Manager_Id={str}").ToList();             
              return Ok(panel);
         }
 
-        // [HttpGet]
-        // [Route("api/[controller]/GetPanelByMgr/{mgrId}")]
-        // public IActionResult GetPanelByMgrs()
-        // {
-        //     var panel = panContext.PanelTbls.FromSqlInterpolated($"exec spGetPanelByManagers").ToList();
-        //     return Ok(panel);
-        // }
+      
 
 
         [HttpGet]
-        [Route("api/[controller]/PanelByDate/{from_date}/{to_date}/{date_format}")]
-        public IActionResult GetPanelByDateFormat(DateTime from_date, DateTime to_date,string dateFormat)
+        [Route("api/[controller]/GetPanelByDateFormat/{from_date}/{to_date}/{date_format}")]
+        public IActionResult GetPanelByDateFormat(DateTime from_date, DateTime to_date,string date_format)
         {
             if (from_date > to_date)
             {
                 return Ok(null);
             }
-            var panel = panContext.GetPanelByDates.FromSqlInterpolated($"exec spGetAvailablePanel2 @Available_From={from_date},@Available_To={to_date}").ToList();
+            var panel = panContext.GetPanelByDates.FromSqlInterpolated($"exec spGetAvailablePanelWithDateFormat @Available_From={from_date},@Available_To={to_date},@Date_Format={date_format}").ToList();
+           // panel.ToString("MMMM dd, yyyy");
+           //panel.
+        // //    foreach(var data in panel){
+        // //     data.Available_From = DateTime.Parse(data.Available_From.ToString("dd-MM-yyyy HH:mm:ss"));
+        //     Console.WriteLine(data.Available_From);
+        //     //Convert.ToDateTime(data.Available_From)..ToString("MMM.dd,yyyy HH:mm:ss");
+        //     //data.Available_From.ToString(("yyyy-MM-dd HH:mm:ss"));
+        //    }
             return Ok(panel);
         }
 
