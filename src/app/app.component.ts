@@ -22,6 +22,10 @@ export class AppComponent {
   mgrNames:any;
   emptyListMgrId:any;
   mgrNotAvailMsg:any;
+  currentPage=1;
+  itemsPerPage=10;
+  totalPages=3;
+
 
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
@@ -69,6 +73,8 @@ export class AppComponent {
     this.trackerItem.trackerPanelByMgr(MgrId).subscribe((panel) => {
       console.warn('panel : ', panel)
       this.panelList = panel;
+      //this.panelList.
+      
     })
   }
 
@@ -105,6 +111,7 @@ export class AppComponent {
      this.panelList='';
      this.mgrNotAvailMsg='';
      this.mgrNames='';
+     this.selectedMgr=[]
     }
   }
 

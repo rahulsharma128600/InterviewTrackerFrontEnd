@@ -39,7 +39,7 @@
         <th>Available To</th>
         <th>Manager Name</th>
       </tr>
-      <tr *ngFor="let data of availData">
+      <tr *ngFor="let data of availData | paginate: {itemsPerPage:10, currentPage: this.currentPage}">
         <td>{{data.panel_Name}}</td>
         <td>{{data.skills}}</td>
         <td>{{data.available_From}}</td>
@@ -48,6 +48,8 @@
 
       </tr>
     </table>
+    <button (click)="currentPage = currentPage-1" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === 1">Next</button>
   </ng-template>
 
 
@@ -60,9 +62,13 @@
 
 <ng-template [ngIf]="radioValue=='byMgr'">
 
-  <label>Select Manager : </label>
+  <label for="managers">Select Manager : </label>
   <select #selTag (change)="getPanelByMultipleMgrs()" [(ngModel)]="selectedMgr" multiple>
     <!-- <option selected>Select Manager</option> -->
+    <!-- <option selected="selected">Select Manager</option> -->
+    <!-- <option value="starter" selected>Select Manage </option> -->
+    <!-- <optgroup label="Select Manager"> -->
+      <!-- <option value="audi" selected>Select Manager</option> -->
     <option *ngFor="let data of item" value="{{data.managerId}}">{{data.managerName}}</option>
   </select>
 
@@ -95,7 +101,7 @@
         <th>Skills</th>
         <th>ManagerName</th>
       </tr>
-      <tr *ngFor="let data of panelList">
+      <tr *ngFor="let data of panelList | paginate: {itemsPerPage:10, currentPage: this.currentPage}">
         <td>{{data.panel_Name}}</td>
         <td>{{data.available_From}}</td>
         <td>{{data.available_To}}</td>
@@ -105,6 +111,8 @@
       </tr>
 
     </table>
+    <button (click)="currentPage = currentPage-1" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
     <button type="button" class="btn btn-outline-primary" (click)="exportexcel()">Export To Excel</button>
   </ng-template>
 
