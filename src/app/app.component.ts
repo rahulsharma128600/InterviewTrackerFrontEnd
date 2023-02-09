@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { ApiCallService } from './services/api-call.service'
 import * as XLSX from 'xlsx';
+import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  
 })
 export class AppComponent {
   title = 'AssignmentFirst';
@@ -22,24 +25,68 @@ export class AppComponent {
   mgrNames:any;
   emptyListMgrId:any;
   mgrNotAvailMsg:any;
+  
+  noOfRecords:any;
+  pageSize = 10;
+  currentPage = 1;
+  numberOfPages:any;
+  numberOfPagesByDate:any;
+  noOfRecordsByDate:any;
+  
+  previousPage() 
+  {
+    this.currentPage--;
+  }
+
+  nextPage() 
+  {
+    this.currentPage++;
+  }
+ 
 
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
       console.warn('data', data);
       this.item = data;
+      this.numberOfPages = Math.ceil(this.noOfRecords/ this.pageSize);
+      
     })
+    
+  }
+  get startIndex(): number {
+    return (this.currentPage - 1) * this.pageSize;
   }
 
+  get endIndex(): number {
+    return Math.min(this.startIndex + this.pageSize, this.noOfRecords);
+  }
+  ngOnInit() {
+    this.numberOfPages = Math.ceil(this.noOfRecords / this.pageSize);
+  
+  previousPage() 
+  {
+    this.currentPage--;
+  }
+
+  nextPage() 
+  {
+    this.currentPage++;
+  }
+}
+  
+
   validateDate(dateFrom: Date, dateTo: Date) {
-    if ((dateFrom.toString() != "" && dateTo.toString() != "" && dateTo > dateFrom)) {
+    if ((dateFrom.toString() != "" && dateTo.toString() != "" && dateTo >= dateFrom)) {
       return true
     }
     else if (dateFrom.toString() == "" || dateTo.toString() == "") {
       this.errorMsg = "Please enter both the dates!!!";
       return false
     }
-    else {
+    else if(dateFrom.toString() != "" || dateTo.toString() != ""){
       this.errorMsg = "'Date From' should be less than 'Date To'!!!"
+      return false}
+      else {
       return false
     }
   }
@@ -48,14 +95,24 @@ export class AppComponent {
   getAll() {
     this.trackerItem.trackerDates(this.dateFrom, this.dateTo).subscribe((data) => {
       console.warn(data)
-      this.availData = data;
+      if(data != '')
+{ this.availData = data; } 
+else{ const format = 'dd-MM-yyyy'; const locale = 'en-US';
+ const formattedDateFrom = formatDate(this.dateFrom, format, locale); 
+const formattedDateTo = formatDate(this.dateTo, format, locale); 
+this.errorMsg = 'No Panel available between '+ formattedDateFrom+' and '+formattedDateTo 
+} 
+
+      this.noOfRecordsByDate=this.availData.length;
+      this.numberOfPagesByDate= Math.ceil(this.noOfRecordsByDate / this.pageSize);
+      this.currentPage=1;
       
     })
   }
 
   getData(date1: any, date2: any) {
     if (this.validateDate(date1, date2)) {
-      console.warn(date1, date2);
+      this.errorMsg="";
       this.dateFrom = date1;
       this.dateTo = date2;
       console.warn(this.dateFrom + " " + this.dateTo);
@@ -74,6 +131,7 @@ export class AppComponent {
 
 
   getPanelByMultipleMgrs(){
+    console.warn('selectedMgr : ',this.selectedMgr);
     this.strValues = this.selectedMgr.toString();
     
     console.warn('strValues : ',this.strValues);
@@ -88,7 +146,17 @@ export class AppComponent {
             this.mgrNames=mgrName;            
           })
           this.mgrNotAvailMsg='No Panel Available under'       
-      } 
+      }
+      this.noOfRecords=this.panelList.length;
+      this.numberOfPages= Math.ceil(this.noOfRecords / this.pageSize);
+      this.currentPage=1;
+      // 
+      
+          
+        
+      
+     // this.numberOfPages=this.noOfRecords/ this.pageSize;
+
     })
 
   }
@@ -105,6 +173,7 @@ export class AppComponent {
      this.panelList='';
      this.mgrNotAvailMsg='';
      this.mgrNames='';
+     this.selectedMgr=[];
     }
   }
 
@@ -121,3 +190,15 @@ export class AppComponent {
     XLSX.writeFile(wb, this.fileName);
   }
 }
+function ngOnInit() {
+  throw new Error('Function not implemented.');
+}
+
+function previousPage() {
+  throw new Error('Function not implemented.');
+}
+
+function nextPage() {
+  throw new Error('Function not implemented.');
+}
+

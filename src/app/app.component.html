@@ -39,15 +39,27 @@
         <th>Available To</th>
         <th>Manager Name</th>
       </tr>
-      <tr *ngFor="let data of availData">
-        <td>{{data.panel_Name}}</td>
+      <tr *ngFor="let data of availData | paginate: {itemsPerPage:10, currentPage: this.currentPage} ">
+        <td>{{data.name}}</td>
         <td>{{data.skills}}</td>
         <td>{{data.available_From}}</td>
         <td>{{data.available_To}}</td>
-        <td>{{data.manager_Name}}</td>
+        <td>{{data.managerName}}</td>
 
       </tr>
     </table>
+    <!-- <div>
+      <button (click)="previousPage()" [disabled]="startIndex === 0">Previous</button>
+      <button (click)="nextPage()" [disabled]="endIndex >= noOfRecordsByDate">Next</button>
+    </div> -->
+    <div>
+      <!-- Page {{ currentPage }} of {{ numberOfPages }} -->
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+    
+    <!-- <button (click)="currentPage = currentPage-1" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === 1">Next</button> -->
+
   </ng-template>
 
 
@@ -63,7 +75,7 @@
   <label>Select Manager : </label>
   <select #selTag (change)="getPanelByMultipleMgrs()" [(ngModel)]="selectedMgr" multiple>
     <!-- <option selected>Select Manager</option> -->
-    <option *ngFor="let data of item" value="{{data.managerId}}">{{data.managerName}}</option>
+    <option *ngFor="let data of item" value="{{data.id}}">{{data.managerName}}</option>
   </select>
 
   Note : You can select multiple managers by pressing ctrl
@@ -91,20 +103,35 @@
         <th>Panel Name</th>
         <th>Available From</th>
         <th>Available To</th>
-        <th>Email Id</th>
+        <!-- <th>Email Id</th> -->
         <th>Skills</th>
-        <th>ManagerName</th>
+        <th>Manager Name</th>
       </tr>
-      <tr *ngFor="let data of panelList">
-        <td>{{data.panel_Name}}</td>
+      <tr *ngFor="let data of panelList | paginate: {itemsPerPage:10, currentPage: this.currentPage} ">
+        <td>{{data.name}}</td>
         <td>{{data.available_From}}</td>
         <td>{{data.available_To}}</td>
-        <td>{{data.email_Id}}</td>
+        <!-- <td>{{data.Email_id}}</td> -->
         <td>{{data.skills}}</td>
-        <td>{{data.manager_Name}}</td>
+        <td>{{data.managerName}}</td>
       </tr>
 
     </table>
+    <!-- <div>
+      <button (click)="previousPage()" [disabled]="startIndex === 0">Previous</button>
+      <button (click)="nextPage()" [disabled]="endIndex >=noOfRecords">Next</button>
+    </div> -->
+    <div>
+      <!-- Page {{ currentPage }} of {{ numberOfPages }} -->
+    
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+    <!-- <pagination-controls (pageChange)="currentPage = $event"></pagination-controls> -->
+    <!-- <button (click)="currentPage = currentPage-1" [disabled]="currentPage === 1">Previous</button>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button> -->
+    <!-- <div *ngFor="let data of panelList | slice: (currentPage - 1) * itemsPerPage : currentPage * itemsPerPage">
+      {{ data }}
+    </div> --> 
     <button type="button" class="btn btn-outline-primary" (click)="exportexcel()">Export To Excel</button>
   </ng-template>
 

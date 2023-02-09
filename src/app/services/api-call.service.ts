@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http'
 export class ApiCallService {
 
   constructor(private http : HttpClient) { }
-  url = 'http://localhost:5170/api/Manager/GetMgr';
+  url = 'http://localhost:5001/api/Manager/api/Manager/GetMgr';
 
   trackerData()
   {
@@ -16,7 +16,7 @@ export class ApiCallService {
 
   trackerDates(dateFrom:Date, dateTo:Date)  {    
     console.warn(dateFrom+" Last "+dateTo)    
-    return this.http.get('http://localhost:5170/api/Panel/PanelByDate/'+dateFrom+'/'+dateTo)  
+    return this.http.get('http://localhost:5001/api/Panel/PanelByDate/'+dateFrom+'/'+dateTo)  
   }
 
   trackerPanelByMgr(mgrId:number)
@@ -26,12 +26,12 @@ export class ApiCallService {
 
   trackerPanelByMultipleMgrs(str:string)
   {
-    console.warn(str);
-    return this.http.get('http://localhost:5170/api/Panel/GetPanelByManagers/'+str)
+    console.warn('str TESTING',str);
+    return this.http.get('http://localhost:5001/api/Panel/api/Panel/GetPanelByMgrIds/'+str)
   }
 
   trackerEmptyListMgrName(str:string){
-    console.warn('str in api',str);
+    console.warn(str);
     return this.http.get('http://localhost:5170/api/Manager/GetMgrById/'+str)
   }
 }
