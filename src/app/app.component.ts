@@ -38,7 +38,7 @@ export class AppComponent {
   }
   constructor(private trackerItem: ApiCallService) {
     trackerItem.trackerData().subscribe((data) => {
-      console.warn('data', data);
+      //console.warn('data', data);
       this.item = data;
       this.numberOfPages = Math.ceil(this.noOfRecords / this.pageSize);
     })
@@ -69,7 +69,7 @@ export class AppComponent {
     }
     else if (dateFrom.toString() == "" || dateTo.toString() == "") {
       this.availData="";
-      this.errorMsg = "Please enter both the dates!!!";
+      this.errorMsg = "Please enter both the dates correctly!!!";
       return false
     }
     else {
@@ -92,7 +92,7 @@ export class AppComponent {
         this.errorMsg = 'No Panel available between ' + formattedDateFrom + ' and ' + formattedDateTo
       }
       this.noOfRecordsByDate = this.availData.length;
-      console.warn('Records by date ' + this.noOfRecordsByDate);
+      //console.warn('Records by date ' + this.noOfRecordsByDate);
       this.currentPage = 1;
 
     })
@@ -102,10 +102,10 @@ export class AppComponent {
     if (this.validateDate(date1, date2)) {
       this.errorMsg = "";
       this.availData="";
-      console.warn(date1, date2);
+      //console.warn(date1, date2);
       this.dateFrom = date1;
       this.dateTo = date2;
-      console.warn(this.dateFrom + " " + this.dateTo);
+      //console.warn(this.dateFrom + " " + this.dateTo);
       this.getAll();
     }
 
@@ -114,7 +114,7 @@ export class AppComponent {
   getPanelByMgr(MgrId: any) {
     console.warn('mgrID : ', MgrId)
     this.trackerItem.trackerPanelByMgr(MgrId).subscribe((panel) => {
-      console.warn('panel : ', panel)
+      //console.warn('panel : ', panel)
       this.panelList = panel;
       //this.panelList.
       // this.noOfRecords=this.panelList.length;
@@ -126,24 +126,24 @@ export class AppComponent {
   getPanelByMultipleMgrs() {
     this.strValues = this.selectedMgr.toString();
 
-    console.warn('strValues : ', this.strValues);
+    //console.warn('strValues : ', this.strValues);
 
     this.trackerItem.trackerPanelByMultipleMgrs(this.strValues).subscribe((panel) => {
-      console.warn('Multiple Panel', panel)
+      //console.warn('Multiple Panel', panel)
       this.panelList = panel;
       if (this.panelList == '') {
         this.emptyListMgrId = this.selectedMgr.toString();
         this.trackerItem.trackerEmptyListMgrName(this.emptyListMgrId).subscribe((mgrName) => {
-          console.warn('mgrList', mgrName);
+          //console.warn('mgrList', mgrName);
           this.mgrNames = mgrName;
         })
         this.mgrNotAvailMsg = 'No Panel Available under'
       }
       this.noOfRecords = this.panelList.length;
       this.noOfRecords = this.panelList.length; this.numberOfPages = Math.ceil(this.noOfRecords / this.pageSize);
-      console.warn('No Of Records ', this.noOfRecords)
+      //console.warn('No Of Records ', this.noOfRecords)
       this.currentPage = 1;
-      console.warn('No Of Pages ', this.numberOfPages)
+      //console.warn('No Of Pages ', this.numberOfPages)
     })
 
   }

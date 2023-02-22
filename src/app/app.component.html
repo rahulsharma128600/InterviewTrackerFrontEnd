@@ -67,11 +67,7 @@
 
   <label for="managers">Select Manager : </label>
   <select #selTag (change)="getPanelByMultipleMgrs()" [(ngModel)]="selectedMgr" multiple>
-    <!-- <option selected>Select Manager</option> -->
-    <!-- <option selected="selected">Select Manager</option> -->
-    <!-- <option value="starter" selected>Select Manage </option> -->
-    <!-- <optgroup label="Select Manager"> -->
-      <!-- <option value="audi" selected>Select Manager</option> -->
+    
     <option *ngFor="let data of item" value="{{data.managerId}}">{{data.managerName}}</option>
   </select>
 
@@ -85,13 +81,11 @@
   <br>
   <p *ngIf="panelList == '' then ifBlock else elseBlock"></p>
   <ng-template #ifBlock>
-    <table>
-      <tr *ngFor="let data of mgrNames">
-        <td style="color: red;">
-          {{mgrNotAvailMsg}} {{data.managerName}}
-        </td>
-      </tr>
-    </table>
+    <div>
+       <div>{{mgrNotAvailMsg}}&nbsp;</div>
+       <div *ngFor="let data of mgrNames" style="color: blue;">{{data.managerName}},&nbsp;
+      </div>
+    </div>
 
   </ng-template>
   <ng-template #elseBlock>

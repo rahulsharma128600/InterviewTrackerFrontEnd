@@ -15,7 +15,7 @@ export class ApiCallService {
   }
 
   trackerDates(dateFrom:Date, dateTo:Date)  {    
-    console.warn(dateFrom+" Last "+dateTo)    
+    //console.warn(dateFrom+" Last "+dateTo)    
     return this.http.get('http://localhost:5170/api/Panel/PanelByDate/'+dateFrom+'/'+dateTo)  
   }
 
@@ -26,12 +26,12 @@ export class ApiCallService {
 
   trackerPanelByMultipleMgrs(str:string)
   {
-    console.warn(str);
+    //console.warn(str);
     return this.http.get('http://localhost:5170/api/Panel/GetPanelByManagers/'+str)
   }
 
   trackerEmptyListMgrName(str:string){
-    console.warn('str in api',str);
+    //console.warn('str in api',str);
     return this.http.get('http://localhost:5170/api/Manager/GetMgrById/'+str)
   }
 }

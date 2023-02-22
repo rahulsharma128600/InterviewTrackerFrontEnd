@@ -3,3 +3,8 @@ div label{
     padding: 2px;
     color: rgb(1, 5, 33);
 }
+
+div div
+{ color: red;
+ display: inline-block;;
+}
